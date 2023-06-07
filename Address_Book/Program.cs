@@ -87,6 +87,20 @@
 
                 Console.WriteLine($"Edited contact: {newcontact.FirstName} {newcontact.LastName}");
             }
+
+            Console.WriteLine("Do you want to delete a contact? (yes/no)");
+            string deleteInput = Console.ReadLine();
+
+            if (deleteInput.ToLower() == "yes")
+            {
+                Console.Write("Enter First Name of contact to delete: ");
+                string firstNameToDelete = Console.ReadLine();
+
+                Console.Write("Enter Last Name of contact to delete: ");
+                string lastNameToDelete = Console.ReadLine();
+
+                addressBook.DeleteContact(firstNameToDelete, lastNameToDelete);
+            }
         }
     }
 }

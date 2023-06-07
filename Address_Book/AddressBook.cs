@@ -34,5 +34,20 @@ namespace Address_Book
                 Console.WriteLine($"Contact with name {firstName} {lastName} not found.");
             }
         }
+
+        public void DeleteContact(string firstName, string lastName)
+        {
+            Contacts contactToDelete = Contacts.Find(c => c.FirstName == firstName && c.LastName == lastName);
+
+            if (contactToDelete != null)
+            {
+                Contacts.Remove(contactToDelete);
+                Console.WriteLine($"Deleted Contact: {firstName} {lastName}");
+            }
+            else
+            {
+                Console.WriteLine($"Contact with name {firstName} {lastName} not found.");
+            }
+        }
     }
 }
