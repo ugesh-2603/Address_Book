@@ -6,6 +6,8 @@
         {
             Console.WriteLine(" Welcome to Address Book Problem ");
 
+            AddressBook addressBook = new AddressBook();
+
             Console.Write("Enter First Name: ");
             string firstName = Console.ReadLine();
 
@@ -34,6 +36,8 @@
             string email = Console.ReadLine();
 
             Contacts contact = new Contacts(firstName, lastName, Present_address, Permanent_address , city, state, zip, phoneNumber, email);
+
+            addressBook.AddContact(contact);
 
             Console.WriteLine($"Created contact: {contact.FirstName} {contact.LastName}");
         }
