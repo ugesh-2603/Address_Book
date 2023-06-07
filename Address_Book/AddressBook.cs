@@ -19,5 +19,20 @@ namespace Address_Book
         {
             Contacts.Add(contact);
         }
+
+        public void EditContact(string firstName, string lastName, Contacts newContactDetails)
+        {
+            Contacts contactToUpdate = Contacts.Find(c => c.FirstName == firstName && c.LastName == lastName);
+
+            if (contactToUpdate != null)
+            {
+                int index = Contacts.IndexOf(contactToUpdate);
+                Contacts[index] = newContactDetails;
+            }
+            else
+            {
+                Console.WriteLine($"Contact with name {firstName} {lastName} not found.");
+            }
+        }
     }
 }
