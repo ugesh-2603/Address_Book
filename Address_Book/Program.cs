@@ -6,29 +6,25 @@
         {
             Console.WriteLine(" Welcome to Address Book Problem ");
 
-            AddressBook addressBook = new AddressBook();
+            Dictionary<string, AddressBook> addressBooks = new Dictionary<string, AddressBook>();
 
             while (true)
             {
                 Console.WriteLine("Please select an option:");
-                Console.WriteLine("1. Create Contact");
-                Console.WriteLine("2. Edit Contact");
-                Console.WriteLine("3. Delete Contact");
-                Console.WriteLine("4. Exit");
+                Console.WriteLine("1. Add Address Book");
+                Console.WriteLine("2. Select Address Book");
+                Console.WriteLine("3. Exit");
                 int option = Convert.ToInt32(Console.ReadLine());
 
                 switch (option)
                 {
                     case 1:
-                        CreateContact(addressBook);
+                        AddAddressBook(addressBooks);
                         break;
                     case 2:
-                        EditContact(addressBook);
+                        SelectAddressBook(addressBooks);
                         break;
                     case 3:
-                        DeleteContact(addressBook);
-                        break;
-                    case 4:
                         return;
                     default:
                         Console.WriteLine("Invalid option. Please select again.");
@@ -37,9 +33,92 @@
             }
         }
 
+        static void AddAddressBook(Dictionary<string, AddressBook> addressBooks)
+        {
+            Console.Write("Enter a name for the new Address Book: ");
+            string name = Console.ReadLine();
+
+            if (addressBooks.ContainsKey(name))
+            {
+                Console.WriteLine($"An Address Book with the name {name} already exists.");
+                return;
+            }
+
+            AddressBook newAddressBook = new AddressBook();
+            addressBooks[name] = newAddressBook;
+
+            Console.WriteLine($"Added Address Book: {name}");
+        }
+
+        static void SelectAddressBook(Dictionary<string, AddressBook> addressBooks)
+        {
+            Console.WriteLine("Available Address Books:");
+            foreach (var name_1 in addressBooks.Keys)
+            {
+                Console.WriteLine(name_1);
+            }
+
+            Console.Write("Enter the name of the Address Book to select: ");
+            string name = Console.ReadLine();
+
+            if (!addressBooks.ContainsKey(name))
+            {
+                Console.WriteLine($"No Address Book found with the name {name}");
+                return;
+            }
+
+            AddressBook selectedAddressBook = addressBooks[name];
+
+            while (true)
+            {
+                Console.WriteLine("Please select an option:");
+                Console.WriteLine("1. Create Contact");
+                Console.WriteLine("2. Edit Contact");
+                Console.WriteLine("3. Delete Contact");
+                Console.WriteLine("4. Show all contacts");
+                Console.WriteLine("5. Back");
+                int option = Convert.ToInt32(Console.ReadLine());
+
+                switch (option)
+                {
+                    case 1:
+                        CreateContact(selectedAddressBook);
+                        break;
+                    case 2:
+                        EditContact(selectedAddressBook);
+                        break;
+                    case 3:
+                        DeleteContact(selectedAddressBook);
+                        break;
+                    case 4:
+                        ShowAllContacts(selectedAddressBook);
+                        break;
+                    case 5:
+                        return;
+                    default:
+                        Console.WriteLine("Invalid option. Please select again.");
+                        break;
+                }
+            }
+        }
+
+        static void ShowAllContacts(AddressBook addressBook)
+        {
+            var contacts = addressBook.Contacts;
+            if (contacts.Count == 0)
+            {
+                Console.WriteLine("No contacts in the address book.");
+                return;
+            }
+
+            foreach (var contact in contacts)
+            {
+                Console.WriteLine($"Name: {contact.FirstName} {contact.LastName}, Address: {contact.Present_Address}, Address: {contact.Permanent_Address}, City: {contact.City}, State: {contact.State}, Zip: {contact.Zip}, Phone Number: {contact.PhoneNumber}, Email: {contact.Email}");
+            }
+        }
+
         static void CreateContact(AddressBook addressBook)
         {
-
             Console.Write("Enter First Name: ");
             string firstName = Console.ReadLine();
 
@@ -99,6 +178,5 @@
 
             Console.WriteLine($"Deleted contact: {firstNameToDelete} {lastNameToDelete}");
         }
-
     }
 }
